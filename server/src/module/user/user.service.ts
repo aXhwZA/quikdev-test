@@ -49,7 +49,7 @@ export class UserService {
   }
 
   findAll() {
-    return this.userModel.find();
+    return this.userModel.find().populate('post');
   }
 
   findOne(id: string) {

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import { Type } from 'class-transformer';
@@ -33,8 +33,11 @@ export class User {
   @Prop({ required: true })
   password: string;
 
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
+  postId: string;
+
   @Type(() => Post)
-  Post: Post;
+  Post: Post[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -54,8 +57,7 @@ UserSchema.pre('save', async function (next) {
 });
 
 UserSchema.virtual('post', {
-  ref: Post,
+  ref: 'Post',
   localField: 'postId',
-  foreignField: 'postId',
-  justOne: false,
+  foreignField: '_id',
 });

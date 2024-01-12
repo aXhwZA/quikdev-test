@@ -16,14 +16,14 @@ export class PostService {
   }
 
   findAll() {
-    return this.postModel.find();
+    return this.postModel.find().populate('comments').populate('user');
   }
 
   findOne(id: string) {
     return this.postModel.findById(id);
   }
 
-  update(id: string, updatePostDto: UpdatePostDto) {
+  update(id: string, updatePostDto: UpdatePostDto | any) {
     return this.postModel.findByIdAndUpdate(id, updatePostDto, { new: true });
   }
 

@@ -13,9 +13,9 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_URL),
+    CommentModule,
     UserModule,
     PostModule,
-    CommentModule,
     AuthModule,
   ],
   controllers: [AppController],
