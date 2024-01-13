@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# Meu Projeto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto utiliza os seguintes frameworks:
 
-## Available Scripts
+- [Nest](https://nestjs.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [React](https://pt-br.reactjs.org/)
 
-In the project directory, you can run:
+## Documentação dos Frameworks
 
-### `npm start`
+Para mais informações sobre como usar esses frameworks, consulte suas respectivas documentações:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Documentação do Nest](https://docs.nestjs.com/)
+- [Documentação do Mongoose](https://mongoosejs.com/docs/guide.html)
+- [Documentação do React](https://pt-br.reactjs.org/docs/getting-started.html)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Disclaimer
 
-### `npm test`
+Este projeto ainda não está pronto, mas já está em um estado funcional.
+Terei que viajar no final de semana, e não terei tempo de terminar o projeto...
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Como Executar o projeto
 
-### `npm run build`
+Primeiramente, será necessário gerar o arquivo .env no ```server```, com as seguintes variáveis:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+DATABASE_URL="mongodb+srv://danielmedeiros:xm4QJ5z0HAMbrm1L@cluster0.itnlx.mongodb.net/quickDev-test?ssl=true&authSource=admin"
+SECRET_KEY="too-secret-for-github"
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Nao se preocupe com a segurança no momento, pois é apenas um teste.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Após isso, basta executar os seguintes comandos no seu VSCODE
 
-### `npm run eject`
+```bash
+CTRL + SHIFT + P
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+>Tasks: Run Task
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+RUN ALL
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+O comando será responsavel por instalar todas as dependencias do projeto, tanto do ```server``` quanto do ```app```, e executar os dois projetos em paralelo.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Postman
 
-## Learn More
+O arquivo postman está na raiz do projeto, na pasta ```postman collection```, basta importar no seu postman e testar as rotas.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Aviso que será necessário gerar a variável ```token``` para testar as rotas de ```/users```, pois elas são protegidas por autenticação.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

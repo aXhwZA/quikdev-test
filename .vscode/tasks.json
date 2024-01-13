@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "RUN ALL",
+            "dependsOn": [
+                "run server",
+                "run frontend"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "BACKEND",
+            "type": "shell",
+            "command": "cd server;npm i;npm run start:dev",
+            "dependsOn": "install",
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "FRONTEND",
+            "type": "shell",
+            "command": "cd app;npm i;npm start",
+            "dependsOn": "install",
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
