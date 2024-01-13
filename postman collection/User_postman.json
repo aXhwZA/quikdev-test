@@ -1,0 +1,130 @@
+{
+    "info": {
+        "_postman_id": "c59f6770-a437-4dbd-b727-f5a3cc3aa14c",
+        "name": "User",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "https://localhost:3000/user/:id",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:3000/user/65a0787de74efed6481e74fa",
+                    "path": [
+                        "user",
+                        "65a0787de74efed6481e74fa"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "https://localhost:3000/user",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/user",
+                    "path": [
+                        "user"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "https://localhost:3000/user/:id",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/user/65a091f5521a18972714f3c7",
+                    "path": [
+                        "user",
+                        "65a091f5521a18972714f3c7"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "https://localhost:3000/user/:id",
+            "request": {
+                "method": "PATCH",
+                "url": {
+                    "raw": "http://localhost:3000/user/65a04c4389e7f02c07c87b76",
+                    "path": [
+                        "user",
+                        "65a04c4389e7f02c07c87b76"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"james sec\"\n}"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,102 @@
+{
+    "info": {
+        "_postman_id": "9d1a0f79-bf35-4128-ab78-c943504e7fec",
+        "name": "Comment",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "https://localhost:3000/comment",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/comment/",
+                    "path": [
+                        "comment"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"userId\": \"65a091f5521a18972714f3c7\",\n  \"description\": \"no bro, wtf\",\n  \"repliesId\": \"65a1c77768260c8d760007bb\"\n}"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "https://localhost:3000/comment",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/comment/65a1c77768260c8d760007bb",
+                    "path": [
+                        "comment",
+                        "65a1c77768260c8d760007bb"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "https://localhost:3000/comment/:id",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:3000/comment/65a142b8ce8ad8e0e76b80b3",
+                    "path": [
+                        "comment",
+                        "65a142b8ce8ad8e0e76b80b3"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
