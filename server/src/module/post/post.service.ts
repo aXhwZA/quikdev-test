@@ -9,18 +9,39 @@ import { Model } from 'mongoose';
 export class PostService {
   constructor(
     @InjectModel(Post.name) private readonly postModel: Model<PostDocument>,
-  ) {}
+  ) { }
 
   create(createPostDto: CreatePostDto) {
     return this.postModel.create({ ...createPostDto });
   }
 
   findAll() {
-    return this.postModel.find().populate('comments').populate('user');
+    return this.postModel
+      .find()
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'name',
+        },
+      })
+      .populate({ path: 'user', select: 'name _id image' });
   }
 
   findOne(id: string) {
-    return this.postModel.findById(id);
+    return this.postModel
+      .findById(id)
+      .find()
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'name image',
+        },
+      })
+      .populate({ path: 'user', select: 'name _id image' });
   }
 
   update(id: string, updatePostDto: UpdatePostDto | any) {
