@@ -33,6 +33,9 @@ export class User {
   @Prop({ required: true })
   password: string;
 
+  @Prop({ required: false })
+  image: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
   postId: string;
 

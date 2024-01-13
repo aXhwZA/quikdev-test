@@ -3,4 +3,5 @@ export class CreateCommentDto {
   postId: string;
   userId: string;
   replyUserId: string;
+  repliesId: string;
 }

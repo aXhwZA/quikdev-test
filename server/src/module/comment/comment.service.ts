@@ -15,21 +15,52 @@ export class CommentService {
   ) {}
 
   async create(createCommentDto: CreateCommentDto) {
-    const newComment = await this.commentModel.create({ ...createCommentDto });
+    const sendComment = { ...createCommentDto };
+
+    delete sendComment.repliesId;
+
+    const newComment = await this.commentModel.create({ ...sendComment });
 
     await this.postService.update(createCommentDto.postId, {
       $push: { commentId: newComment._id },
     });
 
+    if (createCommentDto.repliesId) {
+      await this.commentModel.updateOne(
+        { _id: createCommentDto.repliesId },
+        { $push: { repliesId: newComment._id } },
+      );
+    }
+
     return newComment;
   }
 
   findAll() {
-    return this.commentModel.find();
+    return this.commentModel
+      .find()
+      .populate({
+        path: 'replies',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'name image',
+        },
+      })
+      .populate({ path: 'user', select: 'name _id image' });
   }
 
   findOne(id: string) {
-    return this.commentModel.findById(id);
+    return this.commentModel
+      .findById(id)
+      .populate({
+        path: 'replies',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'name image',
+        },
+      })
+      .populate({ path: 'user', select: 'name _id image' });
   }
 
   update(id: string, updateCommentDto: UpdateCommentDto) {
@@ -38,7 +69,11 @@ export class CommentService {
     });
   }
 
-  remove(id: string) {
+  async remove(id: string) {
+    const comment = await this.commentModel.findById(id);
+
+    await this.commentModel.deleteMany({ _id: { $in: comment.repliesId } });
+
     return this.commentModel.findByIdAndDelete(id);
   }
 }
