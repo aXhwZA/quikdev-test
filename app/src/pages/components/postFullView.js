@@ -61,8 +61,8 @@ export default function Posts({ viewPost, onClose }) {
                     e.stopPropagation();
 
                     confirmAction('delete', () => {
-                      return () => {
-                        easyRequest(`post/${post?._id}`, null, 'DELETE');
+                      return async () => {
+                        await easyRequest(`post/${post?._id}`, null, 'DELETE');
                         setReload(true);
                         onClose();
                       };
@@ -138,8 +138,8 @@ export default function Posts({ viewPost, onClose }) {
                         e.stopPropagation();
 
                         confirmAction('delete-comment', () => {
-                          return () => {
-                            easyRequest(`comment/${comment?._id}`, null, 'DELETE');
+                          return async () => {
+                            await easyRequest(`comment/${comment?._id}`, null, 'DELETE');
                             setReload(true);
                           };
                         }, () => { })

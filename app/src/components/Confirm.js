@@ -10,7 +10,7 @@ export default function Confirm(props) {
   };
 
   return (
-    <div className='absolute z-50 backdrop-blur-sm flex flex-col justify-center items-center w-full h-full'>
+    <div className='fixed z-50 backdrop-blur-sm flex flex-col justify-center items-center w-full h-full'>
       <div className='flex flex-col justify-center items-center p-10 bg-black border-stone-500 border-2 rounded-lg'>
         <span className='mb-10 text-2xl font-bold text-center'>{props.message || defaultMessages[props?.type]}</span>
         <div className='flex flex-row justify-center items-center w-full gap-10'>
@@ -21,7 +21,6 @@ export default function Confirm(props) {
             bgOpacity
           />
           <ButtonC
-            // className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
             onClick={() => props.onConfirm()}
             title='Confirm'
             bgOpacity

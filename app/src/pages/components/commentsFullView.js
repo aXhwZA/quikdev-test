@@ -60,8 +60,8 @@ export default function CommentsFullView({ commentView, onClose, postUserId }) {
                       e.stopPropagation();
 
                       confirmAction('delete-comment', () => {
-                        return () => {
-                          easyRequest(`comment/${comments?._id}`, null, 'DELETE');
+                        return async () => {
+                          await easyRequest(`comment/${comments?._id}`, null, 'DELETE');
                           setReload(true);
                           onClose();
                         };
@@ -136,8 +136,8 @@ export default function CommentsFullView({ commentView, onClose, postUserId }) {
                           e.stopPropagation();
 
                           confirmAction('delete-comment', () => {
-                            return () => {
-                              easyRequest(`comment/${comment?._id}`, null, 'DELETE');
+                            return async () => {
+                              await easyRequest(`comment/${comment?._id}`, null, 'DELETE');
                               setReload(true);
                             };
                           }, () => { })

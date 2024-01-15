@@ -61,8 +61,8 @@ export default function Posts() {
                     e.stopPropagation();
 
                     confirmAction('delete', () => {
-                      return () => {
-                        easyRequest(`post/${post._id}`, null, 'DELETE');
+                      return async () => {
+                        await easyRequest(`post/${post._id}`, null, 'DELETE');
                         setReload(true);
                       };
                     }, () => { })
