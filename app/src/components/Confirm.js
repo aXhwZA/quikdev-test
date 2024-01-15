@@ -6,6 +6,7 @@ export default function Confirm(props) {
     logout: 'Are you sure you want to logout?',
     cancel: 'Are you sure you want to cancel?',
     'delete-comment': 'Are you sure you want to delete this comment?',
+    'delete-account': 'Are you sure you want to delete your account?',
   };
 
   return (

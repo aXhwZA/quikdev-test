@@ -59,7 +59,7 @@ Aviso que será necessário gerar a variável ```token``` para testar as rotas d
 - [x] Criar o Readme.md
 - [x] Criar o banco de dados
 - [x] Criar o modelo de usuário
-- - [ ] Editar um usuário
+- - [x] Editar um usuário
 - [x] Criar o modelo de post
 - [x] Criar o modelo de comentário
 - [x] Criar um sistema de autenticação

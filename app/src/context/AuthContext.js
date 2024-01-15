@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(data.user));
       }
 
-      if (route.includes('user/')) {
+      if (route.includes('user/') && user?.id === data?.id) {
         setUser(data);
         localStorage.setItem('user', JSON.stringify(data));
       }

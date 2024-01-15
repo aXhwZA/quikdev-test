@@ -6,12 +6,14 @@ import ButtonC from "./components/button";
 
 export default function Profile() {
   const { userId } = useParams();
-  const { easyRequest, reload, setReload, clearContext } = useContext(AuthContext);
-  const [user, setUserData] = useState(null);
+  const { easyRequest, reload, setReload, clearContext, confirmAction, user } = useContext(AuthContext);
+  const [userProfile, setUserData] = useState(null);
+  const [editProfile, setEditProfile] = useState(false);
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const getUserData = async () => {
-      if (user && !reload) return;
+      if (userProfile && !reload) return;
 
       const response = await easyRequest(`user/${userId}`);
 
@@ -24,7 +26,13 @@ export default function Profile() {
     }
 
     getUserData();
-  }, [easyRequest, reload, setReload, user, userId]);
+  }, [easyRequest, reload, setReload, userProfile, userId]);
+
+  useEffect(() => {
+    if (editProfile) {
+      setName(userProfile?.name);
+    }
+  }, [editProfile, userProfile]);
 
   return (
 
@@ -58,13 +66,13 @@ export default function Profile() {
                 <div className='flex flex-row justify-start items-start w-full'>
                   <div className="relative rounded-full cursor-pointer">
                     <span
-                      className="absolute z-40 w-full h-full opacity-0 hover:opacity-100 transition-opacity duration-300 text-white hover:bg-black hover:bg-opacity-60 justify-center items-center flex"	
+                      className="absolute z-40 w-full h-full opacity-0 hover:opacity-100 transition-opacity duration-300 text-white hover:bg-black hover:bg-opacity-60 justify-center items-center flex"
                     >
                       EDIT
                     </span>
                     <img
                       className="rounded-full"
-                      src={user?.image || '/portrait-placeholder.png'}
+                      src={userProfile?.image || '/portrait-placeholder.png'}
                       alt='user'
                       width={100}
                       height={100}
@@ -84,7 +92,7 @@ export default function Profile() {
                           });
                           const data = await response.json();
                           const newImage = data.secure_url;
-                          const response2 = await easyRequest(`user/${user?._id}`, { image: newImage }, 'PATCH');
+                          const response2 = await easyRequest(`user/${userProfile?._id}`, { image: newImage }, 'PATCH');
                           if (response2?.message) {
                             return;
                           }
@@ -94,8 +102,46 @@ export default function Profile() {
                     />
                   </div>
                   <div className='flex flex-col justify-start items-start ml-5'>
-                    <h1 className='text-2xl font-bold'>{user?.name}</h1>
-                    <h2 className='text-xl font-bold'>{user?.email}</h2>
+                    {editProfile ? <input
+                      className='p-2 min-w-40 bg-white bg-opacity-5 hover:bg-opacity-10 text-white font-bold rounded mb-3'
+                      type='text'
+                      placeholder='Name'
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                    /> :
+                      <h1 className='text-2xl font-bold'>{userProfile?.name}</h1>
+                    }
+                    <h2 className='text-xl font-bold'>{userProfile?.email}</h2>
+                    {user?.id === userId ?
+                      <div
+                        className="flex mt-5 gap-3"
+                      >
+                        <ButtonC
+                          title={editProfile ? 'Save' : 'Edit Profile'}
+                          bgOpacity
+                          onClick={() => {
+                            if (editProfile) {
+                              easyRequest(`user/${userProfile?._id}`, { name: name }, 'PATCH');
+                              setReload(true);
+                              setEditProfile(false);
+                            } else {
+                              setEditProfile(true);
+                            }
+                          }}
+                        />
+                        <ButtonC
+                          title='Delete Account'
+                          bgOpacity
+                          onClick={() => {
+                            confirmAction('delete-account', () => {
+                              return () => {
+                                easyRequest(`user/${userProfile?._id}`, null, 'DELETE');
+                                setReload(true);
+                              };
+                            }, () => { })
+                          }}
+                        />
+                      </div> : null}
                   </div>
                 </div>
               </div>
