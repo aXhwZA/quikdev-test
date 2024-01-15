@@ -51,7 +51,8 @@ export class CommentService {
           select: 'name image',
         },
       })
-      .populate({ path: 'user', select: 'name _id image' });
+      .populate({ path: 'user', select: 'name _id image' })
+      .sort({ createdAt: -1 });
   }
 
   findOne(id: string) {
