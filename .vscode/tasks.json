@@ -4,8 +4,8 @@
         {
             "label": "RUN ALL",
             "dependsOn": [
-                "run server",
-                "run frontend"
+                "BACKEND",
+                "FRONTEND"
             ],
             "group": {
                 "kind": "build",
