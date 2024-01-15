@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comment, CommentDocument } from './entities/comment.entity';
@@ -14,16 +14,21 @@ export class CommentService {
     private readonly postService: PostService,
   ) {}
 
-  async create(createCommentDto: CreateCommentDto) {
+  async create(createCommentDto: CreateCommentDto, user: any) {
     const sendComment = { ...createCommentDto };
 
     delete sendComment.repliesId;
 
     const newComment = await this.commentModel.create({ ...sendComment });
 
-    await this.postService.update(createCommentDto.postId, {
-      $push: { commentId: newComment._id },
-    });
+    await this.postService.update(
+      createCommentDto.postId,
+      {
+        $push: { commentId: newComment._id },
+      },
+      user,
+      true,
+    );
 
     if (createCommentDto.repliesId) {
       await this.commentModel.updateOne(
@@ -63,17 +68,36 @@ export class CommentService {
       .populate({ path: 'user', select: 'name _id image' });
   }
 
-  update(id: string, updateCommentDto: UpdateCommentDto) {
+  async update(id: string, updateCommentDto: UpdateCommentDto, user: any) {
+    await this.validateUserEdit(id, user);
+
     return this.commentModel.findByIdAndUpdate(id, updateCommentDto, {
       new: true,
     });
   }
 
-  async remove(id: string) {
+  async remove(id: string, user: any) {
+    await this.validateUserEdit(id, user);
+
     const comment = await this.commentModel.findById(id);
 
     await this.commentModel.deleteMany({ _id: { $in: comment.repliesId } });
 
     return this.commentModel.findByIdAndDelete(id);
+  }
+
+  async validateUserEdit(id: string, user: any) {
+    const comment: any = await this.findOne(id);
+    const post: any = await this.postService.findOne(comment?.postId);
+
+    if (
+      user?.id !== String(comment?.userId) &&
+      user?.id !== String(post?.[0]?.userId)
+    ) {
+      throw new HttpException(
+        'You cannot edit another user comment.',
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 }

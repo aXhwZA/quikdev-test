@@ -63,6 +63,7 @@ export default function CommentsFullView({ commentView, onClose, postUserId }) {
                         return () => {
                           easyRequest(`comment/${comments?._id}`, null, 'DELETE');
                           setReload(true);
+                          onClose();
                         };
                       }, () => { })
                     }}

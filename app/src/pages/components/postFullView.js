@@ -64,6 +64,7 @@ export default function Posts({ viewPost, onClose }) {
                       return () => {
                         easyRequest(`post/${post?._id}`, null, 'DELETE');
                         setReload(true);
+                        onClose();
                       };
                     }, () => { })
                   }}

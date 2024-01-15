@@ -27,7 +27,7 @@ export class Comment {
   @Prop({ required: false })
   replyUserId: string;
 
-  @Prop({ required: true, maxLength: 100 })
+  @Prop({ required: false, maxLength: 100 })
   description: string;
 
   @Prop({ required: false })

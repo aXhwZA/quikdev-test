@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostDocument } from './entities/post.entity';
@@ -44,11 +44,18 @@ export class PostService {
       .populate({ path: 'user', select: 'name _id image' });
   }
 
-  update(id: string, updatePostDto: UpdatePostDto | any) {
+  async update(
+    id: string,
+    updatePostDto: UpdatePostDto | any,
+    user: any,
+    machine?: boolean,
+  ) {
+    await this.validatePostUser(id, user, machine);
     return this.postModel.findByIdAndUpdate(id, updatePostDto, { new: true });
   }
 
-  remove(id: string) {
+  async remove(id: string, user: any) {
+    await this.validatePostUser(id, user);
     return this.postModel.findByIdAndDelete(id);
   }
 
@@ -69,5 +76,18 @@ export class PostService {
     }));
 
     return report;
+  }
+
+  async validatePostUser(id: string, user: any, machine?: boolean) {
+    if (machine) return;
+
+    const post: any = await this.findOne(id);
+
+    if (String(post?.[0]?.userId) != user?.id) {
+      throw new HttpException(
+        'You cannot edit another user post.',
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 }
