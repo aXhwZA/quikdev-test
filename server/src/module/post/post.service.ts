@@ -20,13 +20,15 @@ export class PostService {
       .find()
       .populate({
         path: 'comments',
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: 'user',
           model: 'User',
           select: 'name',
         },
       })
-      .populate({ path: 'user', select: 'name _id image' });
+      .populate({ path: 'user', select: 'name _id image' })
+      .sort({ createdAt: -1 });
   }
 
   findOne(id: string) {
@@ -35,6 +37,7 @@ export class PostService {
       .find()
       .populate({
         path: 'comments',
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: 'user',
           model: 'User',
