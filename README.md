@@ -1,18 +1,20 @@
 # Meu Projeto
 
-Este projeto utiliza os seguintes frameworks:
+Este projeto utiliza os seguintes frameworks e ferramentas:
 
 - [Nest](https://nestjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [React](https://pt-br.reactjs.org/)
+- [Tailwind](https://tailwindcss.com/)
 
 ## Documentação dos Frameworks
 
-Para mais informações sobre como usar esses frameworks, consulte suas respectivas documentações:
+Para mais informações sobre como usar, consulte suas respectivas documentações:
 
 - [Documentação do Nest](https://docs.nestjs.com/)
 - [Documentação do Mongoose](https://mongoosejs.com/docs/guide.html)
 - [Documentação do React](https://pt-br.reactjs.org/docs/getting-started.html)
+- [Documentação do Tailwind](https://tailwindcss.com/docs)
 
 ## Disclaimer
 
@@ -52,3 +54,18 @@ O arquivo postman está na raiz do projeto, na pasta ```postman collection```, b
 
 Aviso que será necessário gerar a variável ```token``` para testar as rotas de ```/users```, pois elas são protegidas por autenticação.
 
+## To Do List
+
+- [x] Criar o Readme.md
+- [x] Criar o banco de dados
+- [x] Criar o modelo de usuário
+- - [ ] Editar um usuário
+- [x] Criar o modelo de post
+- [x] Criar o modelo de comentário
+- [x] Criar um sistema de autenticação
+- - [ ] Validar Email
+- [ ] Postagem tenha a possibilidade de adicionar uma imagem;
+- [ ] Usuário da postagem também pode remover o comentário;
+- [ ] Crie uma rota que gere um relatório;
+- - [ ] Título do post;
+- - [ ] Quantidade de comentários;
