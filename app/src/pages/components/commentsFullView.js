@@ -2,8 +2,8 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import NewPost from "../components/newPost";
 
-export default function CommentsFullView({ commentView, onClose }) {
-  const { easyRequest, reload, setReload, user } = useContext(AuthContext);
+export default function CommentsFullView({ commentView, onClose, postUserId }) {
+  const { easyRequest, reload, setReload, user, confirmAction } = useContext(AuthContext);
   const [viewReplies, setViewReplies] = useState(null);
   const [comments, setComments] = useState(null);
 
@@ -54,10 +54,42 @@ export default function CommentsFullView({ commentView, onClose }) {
                     </div>
                   </div>
                   <span className='text-xs text-gray-400'>{convertDateTime(comments.createdAt)}</span>
+                  {postUserId === user?.id || comments?.userId === user?.id ? <div
+                    className='flex flex-row justify-start items-center cursor-pointer'
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      confirmAction('delete-comment', () => {
+                        return () => {
+                          easyRequest(`comment/${comments?._id}`, null, 'DELETE');
+                          setReload(true);
+                        };
+                      }, () => { })
+                    }}
+                  >
+                    <img
+                      className="dark:invert"
+                      src='/trash.svg'
+                      alt='trash'
+                      width={20}
+                      height={20}
+                      priority
+                    />
+                  </div> : null}
                 </div>
                 <div className="ml-10 mb-5">
                   <div className='ml-5 flex flex-col justify-start items-start w-full mt-2'>
                     <span className='text-sm'>{comments.description}</span>
+
+                    {comments?.image ? <img
+                      className="rounded-lg w-[90%] mt-2"
+                      src={comments?.image}
+                      alt='comments'
+                      width={300}
+                      height={300}
+                      priority
+                    /> : null}
+
                   </div>
                 </div>
                 <div className="ml-10">
@@ -93,14 +125,46 @@ export default function CommentsFullView({ commentView, onClose }) {
                           priority
                         />
                         <div className='flex flex-col justify-start items-start ml-5'>
-                          <span className='text-1xl font-bold text-center mb-2'>{comment.user.name}</span>
+                          <span className='text-1xl font-bold text-center mb-2'>{comment?.user?.name}</span>
                         </div>
                       </div>
-                      <span className='text-xs text-gray-400'>{convertDateTime(comment.createdAt)}</span>
+                      <span className='text-xs text-gray-400'>{convertDateTime(comment?.createdAt)}</span>
+                      {postUserId === user?.id || comment?.userId === user?.id ? <div
+                        className='flex flex-row justify-start items-center cursor-pointer'
+                        onClick={(e) => {
+                          e.stopPropagation();
+
+                          confirmAction('delete-comment', () => {
+                            return () => {
+                              easyRequest(`comment/${comment?._id}`, null, 'DELETE');
+                              setReload(true);
+                            };
+                          }, () => { })
+                        }}
+                      >
+                        <img
+                          className="dark:invert"
+                          src='/trash.svg'
+                          alt='trash'
+                          width={20}
+                          height={20}
+                          priority
+                        />
+                      </div> : null}
                     </div>
                     <div className="ml-10 mb-5">
                       <div className='ml-5 flex flex-col justify-start items-start w-full mt-2'>
-                        <span className='text-sm'>{comment.description}</span>
+                        <span className='text-sm'>{comment?.description}</span>
+
+                        {comment?.image ? <img
+                          className="rounded-lg w-[90%] mt-2"
+                          src={comment?.image}
+                          alt='comment'
+                          width={300}
+                          height={300}
+                          priority
+                        /> : null}
+
                       </div>
                     </div>
                     <div className="ml-10">

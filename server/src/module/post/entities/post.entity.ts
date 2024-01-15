@@ -32,6 +32,9 @@ export class Post {
   @Prop({ required: true })
   description: string;
 
+  @Prop({ required: false })
+  image: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userId: string;
 

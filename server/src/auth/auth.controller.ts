@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
+import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { CreateUserDto } from 'src/module/user/dto/create-user.dto';
 import { UserService } from 'src/module/user/user.service';
 import { AuthService } from './auth.service';
@@ -12,19 +11,8 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
-  @Get('/onlyauth')
-  @UseGuards(AuthGuard('jwt'))
-  async hiddenInformation() {
-    return 'hidden information';
-  }
-
-  @Get('/anyone')
-  async publicInformation() {
-    return 'this can be seen by anyone';
-  }
-
   @Post('register')
-  async register(@Body() registerDTO: CreateUserDto) {
+  async register(@Body(new ValidationPipe()) registerDTO: CreateUserDto) {
     const user = await this.userService.create(registerDTO);
     const payload = {
       email: user.email,
@@ -35,7 +23,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() loginDTO: LoginDto) {
+  async login(@Body(new ValidationPipe()) loginDTO: LoginDto) {
     const user = await this.userService.findByLogin(loginDTO);
     const payload = {
       email: user.email,

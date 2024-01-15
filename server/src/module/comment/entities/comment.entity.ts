@@ -30,6 +30,9 @@ export class Comment {
   @Prop({ required: true, maxLength: 100 })
   description: string;
 
+  @Prop({ required: false })
+  image: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
   postId: string;
 

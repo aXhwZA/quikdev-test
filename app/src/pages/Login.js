@@ -37,13 +37,13 @@ export default function Login({ register }) {
     const content = buildContent();
 
     const response = await easyRequest(`auth/${isRegister ? 'register' : 'login'}`, content, 'POST');
-    
+
     if (response?.message) {
       setError(response.message);
 
       setTimeout(() => {
         setError(null);
-      }, 3000);
+      }, 5000);
       return;
     }
 
@@ -77,7 +77,7 @@ export default function Login({ register }) {
             type='text'
             placeholder='Name'
             onChange={e => setName(e.target.value)}
-          /> : null }
+          /> : null}
           <input
             className='p-2 min-w-40 bg-white bg-opacity-5 hover:bg-opacity-10 text-white font-bold rounded mb-3'
             type='text'
@@ -103,10 +103,12 @@ export default function Login({ register }) {
             bgOpacity
           />
         </div>
-          <span className={`${error ? 'text-red-500' : 'text-black'} text-sm`}>
-            {error || 'none'}
-          </span>
       </div>
+      <span className={`${error ? 'text-red-500' : 'text-black'} text-sm text-center absolute top-32 self-center`}>
+        {typeof error == 'object' ? error?.map(err => {
+          return (<div>{err}</div>);
+        }) : error}
+      </span>
     </main>
   );
 }

@@ -63,9 +63,9 @@ Aviso que será necessário gerar a variável ```token``` para testar as rotas d
 - [x] Criar o modelo de post
 - [x] Criar o modelo de comentário
 - [x] Criar um sistema de autenticação
-- - [ ] Validar Email
-- [ ] Postagem tenha a possibilidade de adicionar uma imagem;
-- [ ] Usuário da postagem também pode remover o comentário;
+- - [x] Validar Email
+- [x] Postagem tenha a possibilidade de adicionar uma imagem;
+- [x] Usuário da postagem também pode remover o comentário;
 - [ ] Crie uma rota que gere um relatório;
 - - [ ] Título do post;
 - - [ ] Quantidade de comentários;

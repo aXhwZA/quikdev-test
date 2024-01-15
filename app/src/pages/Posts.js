@@ -4,7 +4,7 @@ import PostFullView from "./components/postFullView";
 import NewPost from "./components/newPost";
 
 export default function Posts() {
-  const { easyRequest, reload, setReload } = useContext(AuthContext);
+  const { easyRequest, reload, setReload, confirmAction, user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [viewPost, setViewPost] = useState(null);
 
@@ -51,15 +51,47 @@ export default function Posts() {
                     priority
                   />
                   <div className='flex flex-col justify-start items-start ml-5'>
-                    <span className='text-1xl font-bold text-center mb-2'>{post.user.name}</span>
+                    <span className='text-1xl font-bold text-center mb-2'>{post?.user?.name}</span>
                   </div>
                 </div>
-                <span className='text-xs text-gray-400'>{convertDateTime(post.createdAt)}</span>
+                <span className='text-xs text-gray-400'>{convertDateTime(post?.createdAt)}</span>
+                {post?.userId === user.id ? <div
+                  className='flex flex-row justify-start items-center'
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    confirmAction('delete', () => {
+                      return () => {
+                        easyRequest(`post/${post._id}`, null, 'DELETE');
+                        setReload(true);
+                      };
+                    }, () => { })
+                  }}
+                >
+                  <img
+                    className="dark:invert"
+                    src='/trash.svg'
+                    alt='trash'
+                    width={20}
+                    height={20}
+                    priority
+                  />
+                </div> : null}
               </div>
               <div className="ml-10 mb-5">
-                <span className='ml-5 text-l font-bold'>{post.title}</span>
-                <div className='ml-5 flex flex-col justify-start items-start w-full mt-2'>
-                  <span className='text-sm'>{post.description}</span>
+                <span className='ml-5 text-l font-bold'>{post?.title}</span>
+                <div className='ml-5 mr-5 flex flex-col justify-start items-start w-full mt-2'>
+                  <span className='text-sm'>{post?.description}</span>
+
+                  {post?.image ? <img
+                    className="rounded-lg w-[90%] mt-2"
+                    src={post?.image}
+                    alt='post'
+                    width={300}
+                    height={300}
+                    priority
+                  /> : null}
+
                 </div>
               </div>
               <div className="ml-10">
