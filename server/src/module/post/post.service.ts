@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 export class PostService {
   constructor(
     @InjectModel(Post.name) private readonly postModel: Model<PostDocument>,
-  ) { }
+  ) {}
 
   create(createPostDto: CreatePostDto) {
     return this.postModel.create({ ...createPostDto });
@@ -50,5 +50,24 @@ export class PostService {
 
   remove(id: string) {
     return this.postModel.findByIdAndDelete(id);
+  }
+
+  async getPostsReport(): Promise<any[]> {
+    const posts = await this.postModel.find().populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        model: 'User',
+        select: 'name image',
+      },
+    });
+
+    const report = posts.map((post: any) => ({
+      postId: post.id,
+      postTitle: post.title,
+      commentsCount: post.comments?.length,
+    }));
+
+    return report;
   }
 }

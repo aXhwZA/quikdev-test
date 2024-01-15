@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "cf42738a-e933-406f-8708-ecb89844bd98",
+        "_postman_id": "f9a1a23a-ad12-4b2a-85a4-cd18f59fb1fb",
         "name": "Post",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": ""
@@ -50,6 +50,34 @@
                     "raw": "http://localhost:3000/post/",
                     "path": [
                         "post"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000"
+                },
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{token}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "http://localhost:3000/post/report",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/post/report",
+                    "path": [
+                        "post",
+                        "report"
                     ],
                     "protocol": "http",
                     "host": [

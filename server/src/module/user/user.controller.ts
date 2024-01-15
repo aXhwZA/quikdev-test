@@ -7,7 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
-  UnauthorizedException,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { JWTAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UserService } from './user.service';
@@ -22,7 +23,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
@@ -66,7 +67,10 @@ export class UserController {
     @User() user: any,
   ) {
     if (user.id !== id) {
-      throw new UnauthorizedException();
+      throw new HttpException(
+        'You cannot edit another user profile.',
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     return this.userService.update(id, updateUserDto);

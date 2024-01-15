@@ -28,6 +28,11 @@ export class PostController {
     return this.postService.findAll();
   }
 
+  @Get('report')
+  async getPostsReport() {
+    return this.postService.getPostsReport();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.postService.findOne(id);
