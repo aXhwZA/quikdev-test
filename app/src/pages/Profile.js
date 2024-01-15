@@ -67,16 +67,6 @@ export default function Profile() {
                   <div className="relative rounded-full cursor-pointer">
                     <span
                       className="absolute z-40 w-full h-full opacity-0 hover:opacity-100 transition-opacity duration-300 text-white hover:bg-black hover:bg-opacity-60 justify-center items-center flex"
-                    >
-                      EDIT
-                    </span>
-                    <img
-                      className="rounded-full"
-                      src={userProfile?.image || '/portrait-placeholder.png'}
-                      alt='user'
-                      width={100}
-                      height={100}
-                      priority
                       onClick={() => {
                         const file = document.createElement('input');
                         file.type = 'file';
@@ -93,12 +83,20 @@ export default function Profile() {
                           const data = await response.json();
                           const newImage = data.secure_url;
                           const response2 = await easyRequest(`user/${userProfile?._id}`, { image: newImage }, 'PATCH');
-                          if (response2?.message) {
-                            return;
-                          }
+                          setUserData(response2);
                           setReload(true);
                         }
                       }}
+                    >
+                      EDIT
+                    </span>
+                    <img
+                      className="rounded-full"
+                      src={userProfile?.image || '/portrait-placeholder.png'}
+                      alt='user'
+                      width={100}
+                      height={100}
+                      priority
                     />
                   </div>
                   <div className='flex flex-col justify-start items-start ml-5'>
@@ -119,9 +117,10 @@ export default function Profile() {
                         <ButtonC
                           title={editProfile ? 'Save' : 'Edit Profile'}
                           bgOpacity
-                          onClick={() => {
+                          onClick={async () => {
                             if (editProfile) {
-                              easyRequest(`user/${userProfile?._id}`, { name: name }, 'PATCH');
+                              const data = await easyRequest(`user/${userProfile?._id}`, { name: name }, 'PATCH');
+                              setUserData(data);
                               setReload(true);
                               setEditProfile(false);
                             } else {

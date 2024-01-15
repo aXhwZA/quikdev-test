@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JWTAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UserService } from './user.service';
@@ -14,6 +15,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginDto } from 'src/auth/dto/login.dto';
+import { User } from './decorator/user.decorator';
 
 @Controller('user')
 export class UserController {
@@ -58,7 +60,15 @@ export class UserController {
 
   @Patch(':id')
   @UseGuards(JWTAuthGuard)
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @User() user: any,
+  ) {
+    if (user.id !== id) {
+      throw new UnauthorizedException();
+    }
+
     return this.userService.update(id, updateUserDto);
   }
 
